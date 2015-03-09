@@ -1,0 +1,48 @@
+import java.io.Console;
+
+public class Leap{
+
+	public static void main(String[] args){
+
+		Console con = System.console();
+		Leap leap = new Leap();
+		boolean leapYear;
+		String input;
+		int year;
+
+		input = con.readLine("What year do you want to check: ");
+		year = Integer.parseInt(input);
+
+		leapYear = leap.isLeapYear(year);
+
+		if(leapYear){
+
+			System.out.println(year + " is a leap year!");
+
+		}//end if leap year
+
+		else{
+
+			System.out.println(year + " is not a leap year!");
+
+		}//end else not leap year
+
+	}//end main method
+
+	public boolean isLeapYear(int year){
+
+		boolean century = (year % 100 == 0);
+		boolean quadtury = (year % 400 == 0);
+		boolean leapYear = (year % 4 == 0);
+
+		if (leapYear && (quadtury || !century)){
+			return true;
+		}
+
+		else{
+			return false;
+		}
+
+	}//end method isLeapYear
+
+}//end class Leap
