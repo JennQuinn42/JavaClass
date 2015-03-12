@@ -1,0 +1,123 @@
+/*Exam 6/3/15 Jenn Quinn
+  create a menu and write the code behind it.
+  Create and Array for option three and output the total sum of numbers in the Array*/
+
+//import classes
+import java.io.Console;
+
+public class ExamApp1{
+
+	//declare variables
+	private String userInput = "";
+	private String name = "J Doe";
+	private int age = -1;
+	private Console con = System.console();
+	private int[] arr = new int[20];
+		
+	public static void main(String[] args){
+		
+		//create new ea class to call methods from
+		ExamApp ea = new ExamApp();
+		String input = "";
+		
+		//loop through my menu until user quits
+		do{
+			
+			//call my menu
+			ea.menu();
+			input = ea.getInput("Pick an Option: ");
+			
+			//make a decision based on user input
+			switch(input){
+
+				case "1": ea.enterName(); break;
+				case "2": {
+						System.out.println("");
+						ea.printName(); 
+						break;
+				}//end case 2
+				case "3": ea.getTotal(); break;
+				case "4": System.out.println("\nGoodbye"); break;
+				default: System.out.println("\nInvalid entry please try again \n"); break;
+
+			}//end decide what to do with menu option*/
+		}while(!input.equals("4"));
+
+	}//end main method
+
+	//method to get user input
+	public String getInput(String expression){
+
+		String input = "";
+		userInput = con.readLine(expression);
+		return userInput;
+
+	}//end method getInput
+	
+	//method to display menu to user
+	public void menu(){
+
+		System.out.println("1) Enter a name and age");
+		System.out.println("2) Print a name and age");
+		System.out.println("3) Calculate total");
+		System.out.println("4) Quit \n");
+
+	}//end method menu
+
+	//method to set the name and age as input by user
+	public void enterName(){
+
+		System.out.println("");
+		name = getInput("Please enter a name: ");
+		
+		userInput = getInput("Please enter an age: ");
+		
+		//catch exception if user doesn't put in a number		
+		try{
+
+			age = Integer.parseInt(userInput);
+
+		}
+		catch(NumberFormatException e){
+			userInput = getInput("Please enter a valide number for age: ");
+			age = Integer.parseInt(userInput);
+		}
+		System.out.println("");
+
+	}//end method enterName
+
+	//display name and age to user
+	public void printName(){
+
+		System.out.println("Name is " + name + ", and their age is " + age + "\n");
+
+	}//end method printName
+	
+	//set up my arr array
+	private void initaliseArr(){
+
+
+		for(int i = 0; i < arr.length; ++i){
+
+			arr[i] = i;
+
+		}//end loop through array
+	}//end method initaliseArr
+
+	//calculate the sum of the numbers in my array
+	public void getTotal(){
+
+		initaliseArr();
+		int total = 0;
+
+		for(int i = 0; i < arr.length; ++i){
+
+			total += i;
+
+		}//end add each element of the arr together
+
+		System.out.println("\nThe total is " + total+ "\n");
+		
+	}//end method getTotal
+
+}//end class ExamApp
