@@ -1,0 +1,56 @@
+//import statements
+import java.io.Console;
+
+public class TempApp{
+
+	public static void main(String[] args){
+
+		//formula to convert °C  x  9/5 + 32 = °F
+		TempApp tap = new TempApp();
+		Console con = System.console();
+		String input;
+		int celcius = 0;
+		int fahrenheit = 72;
+		boolean end = true;
+		
+		System.out.println("Enter Q to quit");
+		do{
+			input = con.readLine("What is the temprature in Fahrenheit: ");
+			if(input.equalsIgnoreCase("q")){
+				end = false;
+				
+			}//end not quit
+			else {
+				fahrenheit = Integer.parseInt(input);
+				celcius = ((fahrenheit - 32) * 5) / 9;
+				tap.tempRange(celcius);
+			}//end else quit
+		
+			
+
+		}while(end);
+
+	}//end main method
+
+	public void tempRange(int range){
+		if(range < 0){
+			System.out.println("Get your thermals out it's below freezing!");
+		}//end below freezing
+		else if(range < 12){
+			System.out.println("It's a bit nippy out, wrap up warm.");
+		}//end a bit nippy
+		else if(range < 22){
+			System.out.println("It's quite nice out, actually.");
+		}//end quite nice
+		else if(range < 30){
+			System.out.println("It's sunbathing time!");
+		}//end sunbathing time
+		else if(range <50){
+			System.out.println("Stay inside, it's scorching out!");
+		}//end scorching
+		else{
+			System.out.println("How are you doing this the computer should be melting!"); 
+		}//end else
+	}//end method tempRange
+
+}//end TempApp class
