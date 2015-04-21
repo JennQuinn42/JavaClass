@@ -1,0 +1,681 @@
+package com.jenn.cag.exam.AssignmentB;
+
+import javax.swing.JPanel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.util.Random;
+import java.awt.Graphics;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class HitMissPanel extends JPanel {
+
+	private static final long serialVersionUID = 1L;
+	private JLabel lblGame = new JLabel("Guess the hidden code");
+	private JPanel pnl2ndGuess = new JPanel();
+	private JPanel pnl3rdGuess = new JPanel();
+	private JPanel pnl4thGuess = new JPanel();
+	private JPanel pnl5thGuess = new JPanel();
+	private JPanel pnl6thGuess = new JPanel();
+	private JPanel pnlAnswer1 = new CirclePanel();
+	private JPanel pnlAnswer2 = new CirclePanel();
+	private JPanel pnlAnswer3 = new CirclePanel();
+	private Color[] choices = new Color[3];
+	private JPanel[] circles = new JPanel[18];
+	private Color first;
+	private Color second;
+	private Color third;
+	private int guessColour = -1;
+	private int guesses = -1;
+	/**
+	 * Create the panel.
+	 */
+	public HitMissPanel() {
+		initComponents();
+		pickColors();
+	}//end constructor
+	
+	public void initComponents(){
+		setBackground(Color.LIGHT_GRAY);
+		
+		JPanel pnl1stGuess = new JPanel();
+		pnl1stGuess.setBackground(Color.LIGHT_GRAY);
+		pnl1stGuess.setSize(new Dimension(9, 9));
+		
+		pnl2ndGuess.setBackground(Color.LIGHT_GRAY);
+		pnl2ndGuess.setSize(new Dimension(9, 9));
+		pnl2ndGuess.setVisible(false);
+		
+		JLabel lbl2ndGuess = new JLabel("2nd Guess");
+		lbl2ndGuess.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
+		circles[3] = new CirclePanel();
+		circles[3].setBackground(Color.LIGHT_GRAY);
+		
+		circles[4] = new CirclePanel();
+		circles[4].setBackground(Color.LIGHT_GRAY);
+		
+		circles[5] = new CirclePanel();
+		circles[5].setBackground(Color.LIGHT_GRAY);
+		GroupLayout gl_pnl2ndGuess = new GroupLayout(pnl2ndGuess);
+		gl_pnl2ndGuess.setHorizontalGroup(
+			gl_pnl2ndGuess.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_pnl2ndGuess.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(circles[3], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(circles[4], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(circles[5], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+					.addComponent(lbl2ndGuess)
+					.addContainerGap())
+		);
+		gl_pnl2ndGuess.setVerticalGroup(
+			gl_pnl2ndGuess.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_pnl2ndGuess.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_pnl2ndGuess.createParallelGroup(Alignment.TRAILING)
+						.addComponent(circles[5], GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(circles[4], GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(circles[3], GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lbl2ndGuess))
+					.addContainerGap())
+		);
+		
+		pnl2ndGuess.setLayout(gl_pnl2ndGuess);
+		
+		
+		pnl3rdGuess.setBackground(Color.LIGHT_GRAY);
+		pnl3rdGuess.setSize(new Dimension(9, 9));
+		pnl3rdGuess.setVisible(false);
+		
+		JLabel lbl3rdGuess = new JLabel("3rd Guess");
+		lbl3rdGuess.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
+		circles[6] = new CirclePanel();
+		circles[6].setBackground(Color.LIGHT_GRAY);
+		
+		circles[7] = new CirclePanel();
+		circles[7].setBackground(Color.LIGHT_GRAY);
+		
+		circles[8] = new CirclePanel();
+		circles[8].setBackground(Color.LIGHT_GRAY);
+		GroupLayout gl_pnl3rdGuess = new GroupLayout(pnl3rdGuess);
+		gl_pnl3rdGuess.setHorizontalGroup(
+			gl_pnl3rdGuess.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_pnl3rdGuess.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(circles[6], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(circles[7], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(circles[8], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+					.addComponent(lbl3rdGuess)
+					.addContainerGap())
+		);
+		gl_pnl3rdGuess.setVerticalGroup(
+			gl_pnl3rdGuess.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_pnl3rdGuess.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_pnl3rdGuess.createParallelGroup(Alignment.TRAILING)
+						.addComponent(circles[8], GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(circles[7], GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(circles[6], GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lbl3rdGuess))
+					.addContainerGap())
+		);
+		
+		pnl3rdGuess.setLayout(gl_pnl3rdGuess);
+		
+		
+		pnl4thGuess.setBackground(Color.LIGHT_GRAY);
+		pnl4thGuess.setSize(new Dimension(9, 9));
+		pnl4thGuess.setVisible(false);
+		
+		JLabel lb4thGuess = new JLabel("4th Guess");
+		lb4thGuess.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
+		circles[9] = new CirclePanel();
+		circles[9].setBackground(Color.LIGHT_GRAY);
+		
+		circles[10] = new CirclePanel();
+		circles[10].setBackground(Color.LIGHT_GRAY);
+		
+		circles[11] = new CirclePanel();
+		circles[11].setBackground(Color.LIGHT_GRAY);
+		GroupLayout gl_pnl4thGuess = new GroupLayout(pnl4thGuess);
+		gl_pnl4thGuess.setHorizontalGroup(
+			gl_pnl4thGuess.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_pnl4thGuess.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(circles[9], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(circles[10], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(circles[11], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+					.addComponent(lb4thGuess)
+					.addContainerGap())
+		);
+		gl_pnl4thGuess.setVerticalGroup(
+			gl_pnl4thGuess.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_pnl4thGuess.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_pnl4thGuess.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnl4thGuess.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_pnl4thGuess.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_pnl4thGuess.createSequentialGroup()
+									.addComponent(lb4thGuess)
+									.addContainerGap())
+								.addComponent(circles[10], Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+							.addComponent(circles[11], Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, gl_pnl4thGuess.createSequentialGroup()
+							.addComponent(circles[9], GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())))
+		);
+		
+		pnl4thGuess.setLayout(gl_pnl4thGuess);
+		
+		pnl5thGuess.setBackground(Color.LIGHT_GRAY);
+		pnl5thGuess.setSize(new Dimension(9, 9));
+		pnl5thGuess.setVisible(false);
+		
+		JLabel lb5thGuess = new JLabel("5th Guess");
+		lb5thGuess.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
+		circles[12] = new CirclePanel();
+		circles[12].setBackground(Color.LIGHT_GRAY);
+		
+		circles[13] = new CirclePanel();
+		circles[13].setBackground(Color.LIGHT_GRAY);
+		
+		circles[14] = new CirclePanel();
+		circles[14].setBackground(Color.LIGHT_GRAY);
+		GroupLayout gl_pnl5thGuess = new GroupLayout(pnl5thGuess);
+		gl_pnl5thGuess.setHorizontalGroup(
+			gl_pnl5thGuess.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_pnl5thGuess.createSequentialGroup()
+					.addGap(6)
+					.addComponent(circles[12], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(circles[13], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(circles[14], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+					.addComponent(lb5thGuess)
+					.addContainerGap())
+		);
+		gl_pnl5thGuess.setVerticalGroup(
+			gl_pnl5thGuess.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_pnl5thGuess.createSequentialGroup()
+					.addContainerGap(13, Short.MAX_VALUE)
+					.addGroup(gl_pnl5thGuess.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnl5thGuess.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_pnl5thGuess.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_pnl5thGuess.createSequentialGroup()
+									.addComponent(lb5thGuess)
+									.addContainerGap())
+								.addComponent(circles[13], Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+							.addComponent(circles[14], Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, gl_pnl5thGuess.createSequentialGroup()
+							.addComponent(circles[12], GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())))
+		);
+		pnl5thGuess.setLayout(gl_pnl5thGuess);
+		
+		
+		pnl6thGuess.setBackground(Color.LIGHT_GRAY);
+		pnl6thGuess.setSize(new Dimension(9, 9));
+		pnl6thGuess.setVisible(false);
+		
+		JLabel lb6thGuess = new JLabel("6th Guess");
+		lb6thGuess.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
+		circles[15] = new CirclePanel();
+		circles[15].setBackground(Color.LIGHT_GRAY);
+		
+		circles[16] = new CirclePanel();
+		circles[16].setBackground(Color.LIGHT_GRAY);
+		
+		circles[17] = new CirclePanel();
+		circles[17].setBackground(Color.LIGHT_GRAY);
+		GroupLayout gl_pnl6thGuess = new GroupLayout(pnl6thGuess);
+		gl_pnl6thGuess.setHorizontalGroup(
+			gl_pnl6thGuess.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_pnl6thGuess.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(circles[15], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(circles[16], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(circles[17], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+					.addComponent(lb6thGuess)
+					.addContainerGap())
+		);
+		gl_pnl6thGuess.setVerticalGroup(
+			gl_pnl6thGuess.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_pnl6thGuess.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_pnl6thGuess.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnl6thGuess.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_pnl6thGuess.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_pnl6thGuess.createSequentialGroup()
+									.addComponent(lb6thGuess)
+									.addContainerGap())
+								.addComponent(circles[16], Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+							.addComponent(circles[17], Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, gl_pnl6thGuess.createSequentialGroup()
+							.addComponent(circles[15], GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())))
+		);
+		pnl6thGuess.setLayout(gl_pnl6thGuess);
+		
+		JPanel pnlButtons = new JPanel();
+		pnlButtons.setBackground(Color.LIGHT_GRAY);
+		
+		JLabel lblHitsAndMisses = new JLabel("HITS AND MISSES");
+		lblHitsAndMisses.setForeground(Color.BLUE);
+		lblHitsAndMisses.setFont(new Font("Tahoma", Font.BOLD, 18));
+		
+		JPanel pnlAnswer = new JPanel();
+		pnlAnswer.setBackground(Color.LIGHT_GRAY);
+		
+		
+		pnlAnswer1.setBackground(Color.LIGHT_GRAY);
+		((CirclePanel) pnlAnswer1).setColour(Color.WHITE);
+		
+		pnlAnswer2.setBackground(Color.LIGHT_GRAY);
+		((CirclePanel) pnlAnswer2).setColour(Color.WHITE);
+		
+		pnlAnswer3.setBackground(Color.LIGHT_GRAY);
+		((CirclePanel) pnlAnswer3).setColour(Color.WHITE);
+		
+		GroupLayout gl_pnlAnswer = new GroupLayout(pnlAnswer);
+		gl_pnlAnswer.setHorizontalGroup(
+			gl_pnlAnswer.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlAnswer.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(pnlAnswer1, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(pnlAnswer2, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(pnlAnswer3, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(94, Short.MAX_VALUE))
+		);
+		gl_pnlAnswer.setVerticalGroup(
+			gl_pnlAnswer.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlAnswer.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_pnlAnswer.createParallelGroup(Alignment.LEADING)
+						.addComponent(pnlAnswer3, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(pnlAnswer2, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(pnlAnswer1, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		pnlAnswer.repaint();
+		pnlAnswer.setLayout(gl_pnlAnswer);
+		
+		
+		lblGame.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(154)
+							.addComponent(lblHitsAndMisses))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(21)
+									.addComponent(pnlButtons, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED))
+								.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+									.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(lblGame)
+									.addGap(45)))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addComponent(pnl2ndGuess, GroupLayout.PREFERRED_SIZE, 224, GroupLayout.PREFERRED_SIZE)
+									.addComponent(pnl1stGuess, GroupLayout.PREFERRED_SIZE, 224, GroupLayout.PREFERRED_SIZE)
+									.addComponent(pnl3rdGuess, GroupLayout.PREFERRED_SIZE, 224, GroupLayout.PREFERRED_SIZE)
+									.addComponent(pnl4thGuess, GroupLayout.PREFERRED_SIZE, 224, GroupLayout.PREFERRED_SIZE)
+									.addComponent(pnl5thGuess, GroupLayout.PREFERRED_SIZE, 224, GroupLayout.PREFERRED_SIZE)
+									.addComponent(pnl6thGuess, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE))
+								.addComponent(pnlAnswer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(19, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(pnl1stGuess, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(pnl2ndGuess, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE))
+						.addComponent(pnlButtons, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(pnl3rdGuess, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(pnl4thGuess, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(pnl5thGuess, GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(pnl6thGuess, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(pnlAnswer, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblGame))
+					.addGap(18)
+					.addComponent(lblHitsAndMisses)
+					.addContainerGap())
+		);
+		
+		JLabel lblClickAColour = new JLabel("Click a colour");
+		lblClickAColour.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
+		JButton btnRed = new JButton("Red");
+		btnRed.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				findColour(Color.RED);
+			}
+		});
+		btnRed.setBackground(Color.LIGHT_GRAY);
+		btnRed.setPreferredSize(new Dimension(63, 23));
+		
+		JButton btnBlue = new JButton("Blue");
+		btnBlue.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				findColour(Color.BLUE);
+			}
+		});
+		btnBlue.setBackground(Color.LIGHT_GRAY);
+		btnBlue.setPreferredSize(new Dimension(63, 23));
+		
+		JButton btnGreen = new JButton("Green");
+		btnGreen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				findColour(Color.GREEN);
+			}
+		});
+		btnGreen.setBackground(Color.LIGHT_GRAY);
+		btnGreen.setPreferredSize(new Dimension(63, 23));
+		
+		JButton btnYellow = new JButton("Yellow");
+		btnYellow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				findColour(Color.YELLOW);
+			}
+		});
+		btnYellow.setBackground(Color.LIGHT_GRAY);
+		
+		JButton btnBlack = new JButton("Black");
+		btnBlack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				findColour(Color.BLACK);
+			}
+		});
+		btnBlack.setBackground(Color.LIGHT_GRAY);
+		btnBlack.setPreferredSize(new Dimension(63, 23));
+		GroupLayout gl_pnlButtons = new GroupLayout(pnlButtons);
+		gl_pnlButtons.setHorizontalGroup(
+			gl_pnlButtons.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlButtons.createSequentialGroup()
+					.addGroup(gl_pnlButtons.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnlButtons.createSequentialGroup()
+							.addGap(62)
+							.addComponent(lblClickAColour))
+						.addGroup(gl_pnlButtons.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnRed)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnBlue)
+							.addGap(6)
+							.addComponent(btnGreen))
+						.addGroup(gl_pnlButtons.createSequentialGroup()
+							.addGap(34)
+							.addComponent(btnYellow)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnBlack)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		gl_pnlButtons.setVerticalGroup(
+			gl_pnlButtons.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlButtons.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblClickAColour)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_pnlButtons.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnRed)
+						.addComponent(btnBlue)
+						.addComponent(btnGreen))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_pnlButtons.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnYellow)
+						.addComponent(btnBlack))
+					.addContainerGap(44, Short.MAX_VALUE))
+		);
+		pnlButtons.setLayout(gl_pnlButtons);
+		
+		JLabel lblstguess = new JLabel("1st Guess");
+		lblstguess.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
+		circles[0] = new CirclePanel();
+		circles[0].setBackground(Color.LIGHT_GRAY);
+		
+		circles[1] = new CirclePanel();
+		circles[1].setBackground(Color.LIGHT_GRAY);
+		
+		circles[2] = new CirclePanel();
+		circles[2].setBackground(Color.LIGHT_GRAY);
+		GroupLayout gl_pnl1stGuess = new GroupLayout(pnl1stGuess);
+		gl_pnl1stGuess.setHorizontalGroup(
+			gl_pnl1stGuess.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_pnl1stGuess.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(circles[0], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(circles[1], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(circles[2], GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+					.addComponent(lblstguess)
+					.addContainerGap())
+		);
+		gl_pnl1stGuess.setVerticalGroup(
+			gl_pnl1stGuess.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_pnl1stGuess.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_pnl1stGuess.createParallelGroup(Alignment.TRAILING)
+						.addComponent(circles[2], GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(circles[1], GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_pnl1stGuess.createParallelGroup(Alignment.LEADING)
+							.addComponent(lblstguess)
+							.addComponent(circles[0], Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		pnl1stGuess.setLayout(gl_pnl1stGuess);
+		setLayout(groupLayout);
+
+	
+	}
+	
+	//choose your three colors
+	private void pickColors() {
+		//new random generator
+		Random randomColor = new Random();
+		//set up the range of colours I can choose from
+		Color[] colours = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.BLACK};
+		//initialise the circle I'm guessing and the number of overall guesses i've taken
+		guessColour = 0;
+		guesses = 1;
+		//pick three random colors
+		for(int i = 0; i < choices.length; ++i){
+			choices[i] = colours[randomColor.nextInt(4)];
+			System.out.println(circleColour(choices[i]));
+		}//end for
+		
+	}//end pickColors
+	
+	private String circleColour(Color colour){
+		//output the name of the colour as a String based on the colour I take in
+		if(colour == Color.RED)
+			return "red";
+		else if(colour == Color.BLUE)
+			return "blue";
+		else if(colour == Color.GREEN)
+			return "green";
+		else if(colour == Color.YELLOW)
+			return "yellow";
+		else if(colour == Color.BLACK)
+			return "black";
+		else if (colour == Color.GRAY)
+			return "gray";
+		else
+			return "Undefined";
+	}
+	
+	//check to see if your color is there
+	public void findColour(Color button){
+		//calculate which circle I'm on in my circle array
+		int guessIndex =( guessColour + (guesses * 3)) - 3;
+		//change the circle I'm currently guessing to the colour I picked
+		((CirclePanel) circles[guessIndex]).setColour(button);
+		circles[guessIndex].repaint();
+		
+		//based on the count of how many times I've guessed the colour on this overall guess, give my choice into the
+			//correct variable
+		switch(guessColour){
+			case 0: first = button;break;
+			case 1: second = button;break;
+			case 2: third = button;break;
+		}//end switch
+		
+		guessColour++;
+		//determine if I've made all three colour choices this guess
+		if(guessColour > 2){
+			//check if I won
+			if(first == choices[0] && second == choices[1] && third == choices[2] ){
+				//show the correct colours in the guess the colour app
+				 ((CirclePanel) pnlAnswer1).setColour(choices[0]);
+				 pnlAnswer1.repaint();
+				 ((CirclePanel) pnlAnswer2).setColour(choices[1]);
+				 pnlAnswer2.repaint();
+				 ((CirclePanel) pnlAnswer3).setColour(choices[2]);
+				 pnlAnswer3.repaint();
+				lblGame.setText("You win");
+			}//end you win
+			else{
+				//if I didn't win, reset the colour choice and increase my number of guesses count
+				guessColour = 0;
+				guesses++;
+				//check if I've gone over the prescribed 6 guesses
+				if(guesses > 6){
+					//show the correct colours in the guess the colour app
+					((CirclePanel) pnlAnswer1).setColour(choices[0]);
+					 pnlAnswer1.repaint();
+					 ((CirclePanel) pnlAnswer2).setColour(choices[1]);
+					 pnlAnswer2.repaint();
+					 ((CirclePanel) pnlAnswer3).setColour(choices[2]);
+					 pnlAnswer3.repaint();
+					lblGame.setText("You lose");
+				}//end You lose
+				
+			}//end if you don't win
+
+			
+			//show the next guess panel based on which number of guesses I'm on
+			switch(guesses){
+			case 2: pnl2ndGuess.setVisible(true);break;
+			case 3: pnl3rdGuess.setVisible(true); break;
+			case 4: pnl4thGuess.setVisible(true);break;
+			case 5: pnl5thGuess.setVisible(true);break;
+			case 6: pnl6thGuess.setVisible(true);;break;
+			default: break;
+			}//end guesses
+		}//end 
+		
+		
+	}//end findColour
+
+}//end class
+
+//create an inner class to extend the JPanel class, so I can draw a circle on it
+class CirclePanel extends JPanel {
+	
+	//auto generate gray circles
+	private Color colour = Color.GRAY;
+
+	//just use the superclass(Jpanel) constructor
+	public CirclePanel() {
+		// TODO Auto-generated constructor stub
+		super();
+	}
+
+	//actually draw the circles onto the Panel
+	protected void paintComponent(Graphics g){
+		//call the super constructor to ensure I don't miss anything
+		super.paintComponent(g);
+		
+		int width = super.getWidth() / 2;
+		int height = super.getHeight() / 2;
+		//a better way of displaying the circles than graphic
+		Graphics2D g2d = (Graphics2D) g;
+		//ensure the circle is displayed smoothly rather than pixelly
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		//actually sets what shape I want
+		g2d.setColor(Color.BLACK);
+		g2d.drawOval(4, 4, (width+ 1), (height + 1));
+		
+		g2d.setColor(colour);
+		g2d.fillOval(5, 5, width, height);
+		
+	}
+	
+	//use this to change the colours I want
+	public void setColour(Color colour){
+		this.colour = colour;
+	}
+	
+	//retrieve the colour(can't remember why this is there)
+	public Color getColour(){
+		return this.colour;
+	}
+	
+	//Haven't determined if this is necessary(not to self experiment)
+	public Dimension getPreferredSize(){
+		return new Dimension(300, 300);
+	}
+	
+}//end extending JPanel
+
+
+package com.jenn.cag.exam.AssignmentB;
+
+import javax.swing.JApplet;
+
+public class HitMissApp extends JApplet {
+	private static final long serialVersionUID = 1L;
+
+	public HitMissApp() {
+		setContentPane(new HitMissPanel());
+		}
+		
+		public void init(){
+			setSize(700, 500 );
+		}
+}
