@@ -1,0 +1,83 @@
+package com.jenn.codeforces;
+
+import java.util.Scanner;
+
+public class StolpGearApp {
+
+	private Scanner scan = new Scanner(System.in);
+
+	public static void main(String[] args) {
+
+		StolpGearApp sa = new StolpGearApp();
+		sa.runProgram();
+
+	}//end main
+
+	private void runProgram(){
+		int numGears = 0;
+		int[] numSequence;
+		int rotation = 0;
+		boolean inSequence = false;
+
+		System.out.print("How many gears are on the Stolp's puzzle? ");
+		while(!scan.hasNextInt()){
+			scan.next();
+			System.out.print("Invalid number, please try again:");
+		}
+		numGears = scan.nextInt();
+		numSequence = new int[numGears];
+
+		System.out.println("Please enter the current sequence: ");
+		for(int i = 0; i < numGears; ++i){
+			numSequence[i]= scan.nextInt();
+		}
+		//		System.out.print("The sequence you entered is: ");
+		//		
+		//		for(int i = 0; i < numGears; ++i){
+		//			System.out.print(numSequence[i]);
+		//		}
+
+		if(numSequence[0] != 0){
+			rotation = (numGears) - numSequence[0];
+		}
+
+		for(int i = 0; i < numGears; ++i){
+			int isEven = (i + 1) % 2;
+			if(isEven != 0){
+				numSequence[i] += rotation;
+			}
+			else{
+				numSequence[i] -= rotation;
+			}
+			if(numSequence[i] > (numGears - 1)){
+				numSequence[i] = numSequence[i] - numGears;
+			}
+
+			if(numSequence[i] < 0){
+				numSequence[i] = numGears + numSequence[i];
+			}
+		}
+		//		
+		//		System.out.print("\nThe new sequence is: ");
+		//		
+		//		for(int i = 0; i < numGears; ++i){
+		//			System.out.print(numSequence[i]);
+		//		}
+
+		for(int i = 0; i < numGears; ++i){
+			inSequence = true;
+			if(numSequence[i] != i){
+				inSequence = false;
+				break;
+			}
+		}
+		if(inSequence){
+			System.out.println("This is a real puzzle");
+		}
+		else{
+			System.out.println("This is a fake puzzle");
+		}
+
+	}//end run
+
+}//end class
