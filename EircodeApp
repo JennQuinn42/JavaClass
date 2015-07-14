@@ -1,0 +1,252 @@
+/**
+ * 
+ * Class to search for and enter eircodes and addresses
+ * 
+ */
+
+package src.EircodeApp;
+
+import java.util.Scanner;
+
+public class EircodeApp {
+
+
+	//		System.out.println("Hello World!");
+
+	//Set up relating [] to store the eircode and corresponding addressses
+	private String[] eircode = {"D02 Y006","D04 C932","D15 XR2R","D03 RR27","D24 H510","D02 XE81","D02 P656","","",""};
+	private String[] addresses = {"5 Merrion Square North, Dublin 2","10 Burlington Road, Dublin 4",
+			"Dunsink Observatory, Dunsink Lane, Dublin 15","26 Kincora Road, Clontarf, Dublin 3",
+			"Partas 4A Brookfield Enterprise Centre, Dublin 24","Hodges Figgis, 56-58 Dawson Street, Dublin 2",
+			"Central Bank of Ireland, Dame Street, Dublin 2","","",""};
+	private boolean arrayFull = false;
+
+	public static void main(String[] args) {
+		EircodeApp ea = new EircodeApp();
+		ea.runApp();
+	}
+
+	private void runApp(){
+
+		boolean runMenu = true;
+		int choice = -1;
+
+		while(runMenu){
+
+			@SuppressWarnings("resource")
+			Scanner scan = new Scanner(System.in);
+
+			System.out.println("What would you like to do:");
+			System.out.println("1) Search by eircode");
+			System.out.println("2) Search by address");
+			System.out.println("3) Search by Dublin postcode");
+			System.out.println("4) Enter custom eircode and address");
+			System.out.println("5) Quit");
+
+			//choice = getUserInput();
+
+
+			while(!scan.hasNextLine()){
+				scan.nextLine();
+				System.out.println("Invalid input, please try again");
+			}
+
+			choice = scan.nextInt();
+
+			switch (choice){
+			case 1: 
+				searchCode();
+				break;
+			case 2: 
+				searchAddress();
+				break;
+			case 3:
+				searchPostalCode();
+				break;
+			case 4: 
+				insertEircode();
+				break;
+			case 5: 
+				runMenu = false;
+				break;
+			default: 
+				System.out.println("Invalid option, please try again: ");
+				break;
+			}
+
+		}
+	}
+
+
+	private void searchCode(){
+		//ask user and get their required eircode
+		@SuppressWarnings("resource")
+		Scanner scan = new Scanner(System.in);
+		scan.reset();
+		System.out.println("Please Enter Eircode: ");
+
+		String eircodeInput= "";
+
+		//		while(scan.hasNext()){
+		//			eircodeInput += scan.next();
+		//		}
+
+		eircodeInput = scan.nextLine();
+
+		//		System.out.println("You have entered: " + eircodeInput);
+
+
+		eircodeInput = eircodeInput.toUpperCase();
+
+		//Remove the spaces from the user input
+		while(eircodeInput.contains(" ")){
+			eircodeInput = eircodeInput.replace(" ", "");
+		}
+
+		//If eircode is 7 characters long, add a space as the new 4th index
+		if(eircodeInput.length() == 7){
+			eircodeInput = eircodeInput.substring(0,3) + ' ' + eircodeInput.substring(3);
+		}
+
+		//Check if eircode is too small or too large
+		if(eircodeInput.length() < 7 || eircodeInput.length() > 8){
+			System.out.println(eircodeInput + " is not a valid eircode.");
+		}else{
+
+			int elementFound = -1;
+
+			//check if eircode is in our []
+			for(int i = 0; i < eircode.length; i++){
+
+				if(eircodeInput.equals(eircode[i])){
+
+					elementFound = i;
+					break;
+				}
+			}
+
+			//if it's not found
+			if(elementFound == -1){
+				System.out.println("Sorry, eircode not found.");
+			}else{//if it's found
+				System.out.println(eircodeInput + " is " +addresses[elementFound]);
+			}
+		}
+
+		//scan.close();
+
+		System.out.println();
+
+	}//end search by code
+
+	private void searchAddress(){
+		Scanner scan = new Scanner(System.in);
+		String userSearch = "";
+		int elementFound = -1;
+
+		System.out.println("What address are you looking for? ");
+		userSearch = scan.nextLine();
+		//check if eircode is in our []
+		for(int i = 0; i < addresses.length; i++){
+
+			if(addresses[i].toUpperCase().contains(userSearch.toUpperCase())){
+				System.out.println(addresses[i]);
+				elementFound = i;
+				//break;
+			}
+		}
+
+		if(elementFound == -1){
+			System.out.println("Sorry, address not found.");
+		}
+		System.out.println();
+	}//end searchAddress
+
+	private void searchPostalCode(){
+		String userInput = "";
+		String address = "";
+		Scanner scan = new Scanner(System.in);
+
+		System.out.println("What Dublin postcode do you want to find the addresses for?");
+		userInput = scan.nextLine();
+
+		userInput = userInput.toUpperCase();
+		userInput = userInput.replaceAll(" ", "");
+		
+		if(userInput.startsWith("DUBLIN")){
+			userInput = userInput.replace("DUBLIN", "D");
+		}
+		
+		if(userInput.length() == 2){
+			userInput = userInput.substring(0,1) + "0" + userInput.substring(1);
+		}
+		
+		for(int i = 0; i < eircode.length; ++i){
+			if(eircode[i].startsWith(userInput)){
+				address += "\n" + addresses[i];
+			}
+		}
+		
+		if(address.equals("")){
+			System.out.println("Could not find any addresses for that postcode.");
+		}
+		else{
+			System.out.println(userInput + " contains the addresses:");
+			System.out.println(address);
+		}
+
+		System.out.println();
+	}//end searchPostalCode
+
+	private void insertEircode(){
+		Scanner scan = new Scanner(System.in);
+		String userInput = "";
+
+		enterCode:
+			if(arrayFull){
+				System.out.println("Sorry can only add three custom eircodes.");
+			}
+			else{
+				System.out.println("What is the new eircode you want to add?");
+				userInput = scan.nextLine();
+
+				userInput = userInput.toUpperCase();
+
+				for(int i = 0; i < eircode.length; ++i){
+					if(userInput.equals(eircode[i])){
+						System.out.println("That eircode already exists");
+						break enterCode;
+					}
+				}
+
+				Scanner scan2 = new Scanner(System.in);
+
+				for(int i = 6; i < eircode.length; ++i){
+					if(eircode[i].equals("")){
+
+						System.out.println("What address is that?");
+						String userAddress = scan2.nextLine();
+
+						for(int j = 0; j < eircode.length; ++j){
+							if(userAddress.equals(addresses[j])){
+								System.out.println("That address already exists");
+								break enterCode;
+							}
+						}
+
+						eircode[i] = userInput;
+						addresses[i] = userAddress;
+
+						System.out.println("Address has been added to the database.");
+						break;
+					}
+				}
+
+				if(!eircode[eircode.length - 1].equals(""))	{
+					arrayFull = true;
+				}
+			}
+		System.out.println();
+	}//end insertEircode.
+
+}//end class
