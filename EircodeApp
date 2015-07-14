@@ -46,7 +46,7 @@ public class EircodeApp {
 			//choice = getUserInput();
 
 
-			while(!scan.hasNextLine()){
+			while(!scan.hasNextInt()){
 				scan.nextLine();
 				System.out.println("Invalid input, please try again");
 			}
