@@ -1,26 +1,20 @@
 package com.jenn.inheritance;
 
-public class Person {
+public class Person extends Animal{
 
 	//state
-	private String name;
-	
+	private static final String SOUND = "Hey!"
+;	
 	//constructor
 	public Person(){
 		this("Jane Doe");
 	}//end no-args constructor
 	
 	public Person(String name){
-		this.name = name;
+		super(name, Person.SOUND);
 	}//end 1 args constructor 
-	
-	//behaviour
-	public void makeNoise(){
-		System.out.print("Hey!");
-	}//end makeNoise
-	
-	public String toString(){
-		return this.name;
-	}//end over-ridden toString
 		
+	public void sleep(){
+		System.out.println("Person going to sleep...");
+	}
 }//end class

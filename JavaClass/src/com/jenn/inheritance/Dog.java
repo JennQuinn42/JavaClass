@@ -1,9 +1,9 @@
 package com.jenn.inheritance;
 
-public class Dog {
+public class Dog extends Animal{
 
 	//state
-	private String name;
+	private static final String SOUND = "Woof";
 	
 	//constructors
 	public Dog(){
@@ -11,17 +11,13 @@ public class Dog {
 	}
 	
 	public Dog(String name){
-		this.name = name;
+		super(name, Dog.SOUND);
 	}
-	
-	//behaviour
-	public void makeNoise(){
-		System.out.println("Woof");
+
+	@Override
+	public void sleep() {
+		System.out.println("Dog is dreaming...");
+		
 	}
-	
-	public String toString(){
-		return this.name;
-	}
-	
-	
+
 }//end class

@@ -32,6 +32,12 @@ public class InheritApp {
 		this.moveIt(member);
 		this.moveIt(cat1);
 		this.moveIt(pet2);
+		this.moveIt(bird);
+		
+		this.goToSleep(member);
+		this.goToSleep(cat2);
+		this.goToSleep(pet2);
+		this.goToSleep(bird2);
 		
 	}//end runApp
 
@@ -41,6 +47,10 @@ public class InheritApp {
 	
 	private void moveIt(Animal being){
 		being.move();
+	}
+	
+	private void goToSleep(Animal being){
+		being.sleep();
 	}
 	
 }//end InheritApp

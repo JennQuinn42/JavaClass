@@ -4,6 +4,10 @@ public abstract class Animal {
 
 	//state 
 	private String name;
+	public String getName() {
+		return name;
+	}
+
 	private String sound;
 	
 	public Animal(String name, String sound){
@@ -11,13 +15,15 @@ public abstract class Animal {
 		this.sound = sound;
 	}
 	
+	abstract public void sleep();
+	
 	//behaviour
 	public void makeNoise(){
 		System.out.println(this.name + " says " + this.sound);
 	}
 	
 	public void move(){
-		System.out.println(this.name + " is moving");
+		System.out.println(this.name + " is moving...");
 	}
 	
 	public String toString(){
