@@ -11,9 +11,13 @@ public abstract class Animal {
 		this.sound = sound;
 	}
 	
-	//behaviousd
+	//behaviour
 	public void makeNoise(){
 		System.out.println(this.name + " says " + this.sound);
+	}
+	
+	public void move(){
+		System.out.println(this.name + " is moving");
 	}
 	
 	public String toString(){

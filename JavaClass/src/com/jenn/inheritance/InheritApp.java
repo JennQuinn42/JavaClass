@@ -28,10 +28,19 @@ public class InheritApp {
 		this.talk(bird);
 		this.talk(bird2);
 		
+		
+		this.moveIt(member);
+		this.moveIt(cat1);
+		this.moveIt(pet2);
+		
 	}//end runApp
 
 	private void talk(Animal being){
 		being.makeNoise();
+	}
+	
+	private void moveIt(Animal being){
+		being.move();
 	}
 	
 }//end InheritApp
